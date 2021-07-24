@@ -24,10 +24,10 @@ const App = () => {
   const xValue = d => d.timestamp;
   const xAxisLabel = 'Time';
 
-  const yValue = d => d.temperature;
-  const yAxisLabel = 'Temperature';
+  const yValue = d => d.measurementOD;
+  const yAxisLabel = 'Measurement OD';
 
-  const xAxisTickFormat = timeFormat('%a');
+  const xAxisTickFormat = timeFormat('%S s');
 
   const xScale = scaleTime()
     .domain(extent(data, xValue))
