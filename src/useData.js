@@ -1,19 +1,43 @@
+//import { useState, useEffect } from 'react';
+//import { csv } from 'd3';
+
+//const csvUrl =
+  //'https://gist.githubusercontent.com/curran/90240a6d88bdb1411467b21ea0769029/raw/7d4c3914cc6a29a7f5165f7d5d82b735d97bcfe4/week_temperature_sf.csv';
+
+//export const useData = () => {
+ // const [data, setData] = useState(null);
+
+ // useEffect(() => {
+  //  const row = d => {
+   //   d.temperature = +d.temperature;
+   //   d.timestamp = new Date(d.timestamp);
+   //   return d;
+   // };
+   // csv(csvUrl, row).then(setData);
+ // }, []);
+ // console.log(data);
+//  return data;
+//};
+
+
 import { useState, useEffect } from 'react';
 import { json } from 'd3';
-import * as input from './dataChart.json';
+import * as input from './dataChart';
 
 export const useData = () => {
 
     const [data, setData] = useState(null);
 
-    useEffect(() => {
-      const row = d => {
-        d.measurementOD = +d.measurementOD;
-        d.timestamp = new Date(d.timestamp / 10);
-        return d;
-      };
-      json(input, row).then(setData);
-    }, []);
+    //useEffect(() => setData(input), []);
+
+     useEffect(() => {
+   const row = d => {
+      d.measurementOD = +d.measurementOD;
+      d.timestamp = new Date(d.timestamp);
+      return d;
+    };
+    json(input, row).then(setData);
+  }, []);
 
     console.log(data);
    
