@@ -13,7 +13,7 @@ const yAxisLabelOffset = 45;
 
 const App = () => {
   const data = useData();
-
+  
   if (!data) {
     return <pre>Loading...</pre>;
   }
