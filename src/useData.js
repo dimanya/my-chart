@@ -22,7 +22,6 @@
 
 import { useState, useEffect } from 'react';
 import { json } from 'd3';
-import * as input from './dataChart';
 
 const jsonUrl =
   'https://gist.githubusercontent.com/dimanya/abd990644f41f906a3676bf1bebefa5e/raw/5e5bb4746d214a83fc8e5c2784a2c349ea808b67/data.json';
@@ -30,8 +29,6 @@ const jsonUrl =
 export const useData = () => {
 
     const [data, setData] = useState(null);
-
-    useEffect(() => setData(input), []);
 
      useEffect(() => {
    const row = d => {
