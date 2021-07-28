@@ -8,7 +8,9 @@ export const Marks = ({
   tooltipFormat,
   circleRadius
 }) => (
+  
   <g className="marks">
+    
     <path
       fill="none"
       stroke="black"
@@ -24,7 +26,16 @@ export const Marks = ({
       //  </circle>
       //))
     }
-    
+    {data.map((d) => (
+        <rect
+          //key={d.measurementOD}
+          x={xScale(d.lite)}
+          y={395}
+          width={1}
+          height={20}
+          
+        />
+      ))}
   </g>
   
 );

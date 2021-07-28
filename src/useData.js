@@ -9,8 +9,11 @@ export const useData = () => {
       .then(response => response.json())
       .then(data => {
         let measurementOD = data.filter(event => {
+          
           return event.measurementOD
         });
+
+        console.log(measurementOD);
 
         let res = [];
 
@@ -18,7 +21,15 @@ export const useData = () => {
         measurementOD.map((item) => {
           let measurementO = item.measurementOD;
           let timestampO = new Date(item.timestamp/1e4);
-          const result = {measurementOD:measurementO, timestamp:timestampO};
+          let backgroundColorO = item.backgroundColorOD;
+          let lite = 0;
+            if (item.backgroundColorOD === 1) {
+              lite = new Date(item.timestamp/1e4);
+            } else {
+              lite = 0;
+            }
+          
+          const result = {measurementOD:measurementO, timestamp:timestampO, backgroundColorOD:backgroundColorO, lite:lite};
           res.push(result);
         });
 

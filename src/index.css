@@ -2,26 +2,33 @@ body {
   margin: 0;
   overflow: hidden;
   font-family: 'Poppins', sans-serif;
+  background: #395955;
 }
 pre {
   font-size: 7em;
 }
 .tick line {
-  stroke: #C0C0BB;
+  stroke: #FFFFFF;
+  opacity: 0.1;
 }
 .tick text {
-  fill: #635F5D;
+  fill: #FFFFFF;
 }
 .marks circle {
-  fill: #137B80;
+  fill: #FFFFFF;
 }
 .marks path {
-  stroke: #137B80;
-  stroke-width: 4;
+  stroke: #FFFFFF;
+  stroke-width: 2;
   stroke-linejoin: round;
   stroke-linecap: round;
 }
+
+.marks rect {
+  fill: #FFFFFF;
+}
+
 .axis-label {
   font-size: 2.5em;
-  fill: #635F5D;
+  fill: #FFFFFF;
 }
