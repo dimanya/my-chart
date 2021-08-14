@@ -17,14 +17,21 @@ pre {
 .marks circle {
   fill: #FFFFFF;
 }
-.marks path {
-  stroke: #FFFFFF;
+.od {
+  stroke: #af8971;
   stroke-width: 2;
   stroke-linejoin: round;
   stroke-linecap: round;
 }
 
-.marks rect {
+.os {
+  stroke: #809b6e;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.rect {
   fill: #FFFFFF;
 }
 

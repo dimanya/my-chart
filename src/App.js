@@ -27,6 +27,8 @@ const App = () => {
   const yValue = d => d.measurementOD;
   const yAxisLabel = 'Measurement OD';
 
+  const yValueS = d => d.measurementOS;
+
   const xAxisTickFormat = timeFormat('%S s');
 
   const xScale = scaleTime()
@@ -35,7 +37,7 @@ const App = () => {
     .nice();
 
   const yScale = scaleLinear()
-    .domain(extent(data, yValue))
+    .domain(extent(data, yValueS))
     .range([innerHeight, 0])
     .nice();
 
@@ -54,7 +56,7 @@ const App = () => {
           transform={`translate(${-yAxisLabelOffset},${innerHeight /
             2}) rotate(-90)`}
         >
-          {yAxisLabel}
+          {/* {yAxisLabel} */}
         </text>
         <AxisLeft yScale={yScale} innerWidth={innerWidth} tickOffset={7} />
         <text
@@ -63,7 +65,7 @@ const App = () => {
           y={innerHeight + xAxisLabelOffset}
           textAnchor="middle"
         >
-          {xAxisLabel}
+          {/* {xAxisLabel} */}
         </text>
         <Marks
           data={data}
@@ -71,6 +73,7 @@ const App = () => {
           yScale={yScale}
           xValue={xValue}
           yValue={yValue}
+          yValueS={yValueS}
           tooltipFormat={xAxisTickFormat}
           circleRadius={3}
         />

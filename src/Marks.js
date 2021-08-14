@@ -5,13 +5,21 @@ export const Marks = ({
   yScale,
   xValue,
   yValue,
+  yValueS,
   tooltipFormat,
   circleRadius
 }) => (
   
-  <g className="marks">
-    
-    <path
+  <g>
+    <path className="os"
+      fill="none"
+      stroke="black"
+      d={line()
+        .x(d => xScale(xValue(d)))
+        .y(d => yScale(yValueS(d)))
+        .curve(curveNatural)(data)}
+    />
+    <path className="od"
       fill="none"
       stroke="black"
       d={line()
@@ -19,6 +27,7 @@ export const Marks = ({
         .y(d => yScale(yValue(d)))
         .curve(curveNatural)(data)}
     />
+    
     {
       //data.map(d => (
       //  <circle cx={xScale(xValue(d))} cy={yScale(yValue(d))} r={circleRadius}>
@@ -27,10 +36,20 @@ export const Marks = ({
       //))
     }
     {data.map((d) => (
-        <rect
+        <rect className="rect"
           //key={d.measurementOD}
           x={xScale(d.lite)}
-          y={395}
+          y={435}
+          width={1}
+          height={20}
+          
+        />
+      ))}
+    {data.map((d) => (
+        <rect className="rect"
+          //key={d.measurementOD}
+          x={xScale(d.lites)}
+          y={460}
           width={1}
           height={20}
           

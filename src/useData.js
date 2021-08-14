@@ -10,16 +10,15 @@ export const useData = () => {
       .then(data => {
         let measurementOD = data.filter(event => {
           
-          return event.measurementOD
+          return event.measurementOD && event.measurementOS
         });
-
-        console.log(measurementOD);
 
         let res = [];
 
         // eslint-disable-next-line array-callback-return
         measurementOD.map((item) => {
           let measurementO = item.measurementOD;
+          let measurementS = item.measurementOS;
           let timestampO = new Date(item.timestamp/1e4);
           let backgroundColorO = item.backgroundColorOD;
           let lite = 0;
@@ -28,17 +27,29 @@ export const useData = () => {
             } else {
               lite = 0;
             }
+            let lites = 0;
+            if (item.backgroundColorOS === 1) {
+              lites = new Date(item.timestamp/1e4);
+            } else {
+              lites = 0;
+            }
           
-          const result = {measurementOD:measurementO, timestamp:timestampO, backgroundColorOD:backgroundColorO, lite:lite};
+          
+          const result = {
+            measurementOD:measurementO, 
+            measurementOS:measurementS, 
+            timestamp:timestampO, 
+            backgroundColorOD:backgroundColorO, 
+            lite:lite,
+            lites:lites
+          };
           res.push(result);
         });
-
-        console.log(res);
 
         return res;
       })
       .then(setDataChart)
   }, []);
-  console.log(dataChart);
+  
     return dataChart;
 };
