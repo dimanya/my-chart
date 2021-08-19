@@ -21,25 +21,32 @@ export const useData = () => {
           let measurementS = item.measurementOS;
           let timestampO = new Date(item.timestamp/1e4);
           let backgroundColorO = item.backgroundColorOD;
+          let backgroundColorS = item.backgroundColorOS;
+
           let lite = 0;
-            if (item.backgroundColorOD === 1) {
+            if (backgroundColorO === 1) {
               lite = new Date(item.timestamp/1e4);
-            } else {
-              lite = 0;
+              backgroundColorO = 255;
             }
-            let lites = 0;
-            if (item.backgroundColorOS === 1) {
+            if (backgroundColorO > 1) {
+              lite = new Date(item.timestamp/1e4);
+            }
+
+          let lites = 0;
+            if (backgroundColorS === 1) {
               lites = new Date(item.timestamp/1e4);
-            } else {
-              lites = 0;
+              backgroundColorS = 255;
             }
-          
+            if (backgroundColorS > 1) {
+              lites = new Date(item.timestamp/1e4);
+            }
           
           const result = {
             measurementOD:measurementO, 
             measurementOS:measurementS, 
             timestamp:timestampO, 
             backgroundColorOD:backgroundColorO, 
+            backgroundColorOS:backgroundColorS,
             lite:lite,
             lites:lites
           };
@@ -50,6 +57,6 @@ export const useData = () => {
       })
       .then(setDataChart)
   }, []);
-  
+
     return dataChart;
 };

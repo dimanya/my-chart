@@ -31,9 +31,9 @@ pre {
   stroke-linecap: round;
 }
 
-.rect {
+/* .rect {
   fill: #FFFFFF;
-}
+} */
 
 .axis-label {
   font-size: 2.5em;

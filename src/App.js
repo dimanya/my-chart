@@ -4,6 +4,7 @@ import { useData } from './useData';
 import { AxisBottom } from './AxisBottom';
 import { AxisLeft } from './AxisLeft';
 import { Marks } from './Marks';
+import { bufferCount, from } from 'rxjs';
 
 const width = 960;
 const height = 500;
@@ -12,74 +13,69 @@ const xAxisLabelOffset = 50;
 const yAxisLabelOffset = 45;
 
 const App = () => {
-  const data = useData();
-  
-  if (!data) {
-    return <pre>Loading...</pre>;
-  }
+    const data = useData();
 
-  const innerHeight = height - margin.top - margin.bottom;
-  const innerWidth = width - margin.left - margin.right;
+    if (!data) {
+        return <pre>Loading...</pre>;
+    }
 
-  const xValue = d => d.timestamp;
-  const xAxisLabel = 'Time';
+    const innerHeight = height - margin.top - margin.bottom;
+    const innerWidth = width - margin.left - margin.right;
 
-  const yValue = d => d.measurementOD;
-  const yAxisLabel = 'Measurement OD';
+    let dataChunk = [];
+   
+    
 
-  const yValueS = d => d.measurementOS;
+    
 
-  const xAxisTickFormat = timeFormat('%S s');
+    from(data)
+        .pipe(
+          bufferCount(100)
+          )
+        .subscribe(chunk => { // 100
+            // здесь принимать по 100 сообщений и обрабатывать 
 
-  const xScale = scaleTime()
-    .domain(extent(data, xValue))
-    .range([0, innerWidth])
-    .nice();
+            chunk.map((item) => {
+                return dataChunk.push(item);
+            });
 
-  const yScale = scaleLinear()
-    .domain(extent(data, yValueS))
-    .range([innerHeight, 0])
-    .nice();
+    console.log(dataChunk);}
 
-  return (
-    <svg width={width} height={height}>
-      <g transform={`translate(${margin.left},${margin.top})`}>
-        <AxisBottom
-          xScale={xScale}
-          innerHeight={innerHeight}
-          tickFormat={xAxisTickFormat}
-          tickOffset={7}
-        />
-        <text
-          className="axis-label"
-          textAnchor="middle"
-          transform={`translate(${-yAxisLabelOffset},${innerHeight /
-            2}) rotate(-90)`}
-        >
-          {/* {yAxisLabel} */}
-        </text>
-        <AxisLeft yScale={yScale} innerWidth={innerWidth} tickOffset={7} />
-        <text
-          className="axis-label"
-          x={innerWidth / 2}
-          y={innerHeight + xAxisLabelOffset}
-          textAnchor="middle"
-        >
-          {/* {xAxisLabel} */}
-        </text>
-        <Marks
-          data={data}
-          xScale={xScale}
-          yScale={yScale}
-          xValue={xValue}
-          yValue={yValue}
-          yValueS={yValueS}
-          tooltipFormat={xAxisTickFormat}
-          circleRadius={3}
-        />
-      </g>
-    </svg>
-  );
-};
+    
+           
+            
+        );
 
-export default App;
+        const xValue = dataChank => dataChank.timestamp;
+    //const xAxisLabel = 'Time';
+
+    const yValue = dataChank => dataChank.measurementOD;
+    //const yAxisLabel = 'Measurement OD';
+
+    const yValueS = dataChank => dataChank.measurementOS;
+
+    const xAxisTickFormat = timeFormat('%S s');
+
+    const xScale = scaleTime().domain(extent(dataChunk, xValue)).range([0, innerWidth]).nice();
+
+    const yScale = scaleLinear().domain(extent(dataChunk, yValueS)).range([innerHeight, 0]).nice();
+
+    return (
+            
+        <svg width={width} height={height}>
+            <g transform={`translate(${margin.left},${margin.top})`}>
+                <AxisBottom xScale={xScale} innerHeight={innerHeight} tickFormat={xAxisTickFormat} tickOffset={7} />
+                <text className="axis-label" textAnchor="middle" transform={`translate(${-yAxisLabelOffset},${innerHeight / 2}) rotate(-90)`}>
+                    {/* {yAxisLabel} */}
+                </text>
+                <AxisLeft yScale={yScale} innerWidth={innerWidth} tickOffset={7} />
+                <text className="axis-label" x={innerWidth / 2} y={innerHeight + xAxisLabelOffset} textAnchor="middle">
+                    {/* {xAxisLabel} */}
+                </text>
+                <Marks data={dataChunk} xScale={xScale} yScale={yScale} xValue={xValue} yValue={yValue} yValueS={yValueS} tooltipFormat={xAxisTickFormat} circleRadius={3} />
+            </g>
+        </svg>
+    );
+
+        }
+        export default App;

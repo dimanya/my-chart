@@ -42,6 +42,7 @@ export const Marks = ({
           y={435}
           width={1}
           height={20}
+          style={{fill: "rgba(" + d.backgroundColorOD + "," + d.backgroundColorOD + "," + d.backgroundColorOD + ", 1"}}
           
         />
       ))}
@@ -52,6 +53,7 @@ export const Marks = ({
           y={460}
           width={1}
           height={20}
+          style={{fill: "rgba(" + d.backgroundColorOS + "," + d.backgroundColorOS + "," + d.backgroundColorOS + ", 1"}}
           
         />
       ))}
