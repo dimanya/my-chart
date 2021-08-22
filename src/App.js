@@ -1,10 +1,10 @@
 import React from 'react';
 import { scaleLinear, scaleTime, timeFormat, extent } from 'd3';
 import { useData } from './useData';
+import { useChunks } from './useChunks';
 import { AxisBottom } from './AxisBottom';
 import { AxisLeft } from './AxisLeft';
 import { Marks } from './Marks';
-import { bufferCount, from } from 'rxjs';
 
 const width = 960;
 const height = 500;
@@ -13,7 +13,9 @@ const xAxisLabelOffset = 50;
 const yAxisLabelOffset = 45;
 
 const App = () => {
+
     const data = useData();
+    const currentChunks = useChunks();
 
     if (!data) {
         return <pre>Loading...</pre>;
@@ -22,43 +24,19 @@ const App = () => {
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
 
-    let dataChunk = [];
-   
-    
-
-    
-
-    from(data)
-        .pipe(
-          bufferCount(100)
-          )
-        .subscribe(chunk => { // 100
-            // здесь принимать по 100 сообщений и обрабатывать 
-
-            chunk.map((item) => {
-                return dataChunk.push(item);
-            });
-
-    console.log(dataChunk);}
-
-    
-           
-            
-        );
-
-        const xValue = dataChank => dataChank.timestamp;
+    const xValue = d => d.timestamp;
     //const xAxisLabel = 'Time';
 
-    const yValue = dataChank => dataChank.measurementOD;
+    const yValue = d => d.measurementOD;
     //const yAxisLabel = 'Measurement OD';
 
-    const yValueS = dataChank => dataChank.measurementOS;
+    const yValueS = d => d.measurementOS;
 
     const xAxisTickFormat = timeFormat('%S s');
 
-    const xScale = scaleTime().domain(extent(dataChunk, xValue)).range([0, innerWidth]).nice();
+    const xScale = scaleTime().domain(extent(data, xValue)).range([0, innerWidth]).nice();
 
-    const yScale = scaleLinear().domain(extent(dataChunk, yValueS)).range([innerHeight, 0]).nice();
+    const yScale = scaleLinear().domain(extent(data, yValueS)).range([innerHeight, 0]).nice();
 
     return (
             
@@ -72,7 +50,7 @@ const App = () => {
                 <text className="axis-label" x={innerWidth / 2} y={innerHeight + xAxisLabelOffset} textAnchor="middle">
                     {/* {xAxisLabel} */}
                 </text>
-                <Marks data={dataChunk} xScale={xScale} yScale={yScale} xValue={xValue} yValue={yValue} yValueS={yValueS} tooltipFormat={xAxisTickFormat} circleRadius={3} />
+                <Marks data={currentChunks} xScale={xScale} yScale={yScale} xValue={xValue} yValue={yValue} yValueS={yValueS} tooltipFormat={xAxisTickFormat} circleRadius={3} />
             </g>
         </svg>
     );
