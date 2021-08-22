@@ -11,7 +11,7 @@ export const useChunks = () => {
         useEffect(() => {
             if(data) {
                 from(data)
-            .pipe(bufferCount(1000), concatMap(m => of(m).pipe(delay(1000))))
+            .pipe(bufferCount(5000), concatMap(m => of(m).pipe(delay(1000))))
             .subscribe(chunk => 
                 { // 100
                 // здесь принимать по 100 сообщений и обрабатывать 
