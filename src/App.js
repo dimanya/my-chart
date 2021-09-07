@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { scaleLinear, scaleTime, timeFormat, extent } from 'd3';
 import { useData } from './useData';
 import { useChunks } from './useChunks';
@@ -14,12 +14,34 @@ const yAxisLabelOffset = 45;
 
 const App = () => {
 
+    
+
     const data = useData();
     const currentChunks = useChunks();
+    
+
+    const memoizedCallback = useCallback(
+        () => {
+            let concat = [];
+            while (currentChunks);
+            return concat.push(currentChunks);
+        },
+        [currentChunks],
+      );
+
+    const result = useMemo(() => memoizedCallback(currentChunks), [currentChunks, memoizedCallback]);
+
+    //const result = useMemo(() => {let concat = [], concat.concat(currentChunks), [concat, currentChunks]});
+    console.log(result);
 
     if (!data) {
         return <pre>Loading...</pre>;
     }
+
+    //do {
+    //    concat.push(currentChunks);
+    //console.log(concat);
+    //} while (currentChunks)
 
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;

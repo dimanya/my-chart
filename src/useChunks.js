@@ -22,7 +22,7 @@ export const useChunks = () => {
             }
         }, [data]);
 
-    console.log(currentChunks);
+    //console.log(currentChunks);
 
     return currentChunks;
 };
