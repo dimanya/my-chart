@@ -1,7 +1,7 @@
-import React, { useMemo, useCallback } from 'react';
+import React from 'react';
 import { scaleLinear, scaleTime, timeFormat, extent } from 'd3';
 import { useData } from './useData';
-import { useChunks } from './useChunks';
+import { useConcat } from './useConcat';
 import { AxisBottom } from './AxisBottom';
 import { AxisLeft } from './AxisLeft';
 import { Marks } from './Marks';
@@ -17,31 +17,11 @@ const App = () => {
     
 
     const data = useData();
-    const currentChunks = useChunks();
-    
-
-    const memoizedCallback = useCallback(
-        () => {
-            let concat = [];
-            while (currentChunks);
-            return concat.push(currentChunks);
-        },
-        [currentChunks],
-      );
-
-    const result = useMemo(() => memoizedCallback(currentChunks), [currentChunks, memoizedCallback]);
-
-    //const result = useMemo(() => {let concat = [], concat.concat(currentChunks), [concat, currentChunks]});
-    console.log(result);
+    const currentConcat = useConcat();
 
     if (!data) {
         return <pre>Loading...</pre>;
     }
-
-    //do {
-    //    concat.push(currentChunks);
-    //console.log(concat);
-    //} while (currentChunks)
 
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
@@ -72,7 +52,7 @@ const App = () => {
                 <text className="axis-label" x={innerWidth / 2} y={innerHeight + xAxisLabelOffset} textAnchor="middle">
                     {/* {xAxisLabel} */}
                 </text>
-                <Marks data={currentChunks} xScale={xScale} yScale={yScale} xValue={xValue} yValue={yValue} yValueS={yValueS} tooltipFormat={xAxisTickFormat} circleRadius={3} />
+                <Marks data={currentConcat} xScale={xScale} yScale={yScale} xValue={xValue} yValue={yValue} yValueS={yValueS} tooltipFormat={xAxisTickFormat} circleRadius={3} />
             </g>
         </svg>
     );
